@@ -1374,90 +1374,8 @@ body {
   text-align: center;
 }
 
-/* ==========================================
-   ACT I: Welcome Splash
-   ========================================== */
-.welcome-splash-panel {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-  width: 100%;
-}
-
-.words-matrix-glow {
-  position: relative;
-  height: 120px;
-  width: 100%;
-  overflow: hidden;
-}
-
-.matrix-word {
-  position: absolute;
-  font-size: 0.78rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  color: var(--blue);
-  background: var(--blue-glow);
-  padding: 4px 10px;
-  border-radius: 6px;
-}
-
-.float-1 {
-  left: 10px;
-  top: 15px;
-  animation: nodeFloat 4s infinite alternate;
-}
-
-.float-2 {
-  right: 15px;
-  top: 20px;
-  animation: nodeFloat 3.5s infinite alternate-reverse;
-}
-
-.float-3 {
-  left: 40%;
-  top: 50%;
-  animation: nodeFloat 4.2s infinite alternate;
-}
-
-.float-4 {
-  left: 20px;
-  bottom: 15px;
-  animation: nodeFloat 3.8s infinite alternate-reverse;
-}
-
-.float-5 {
-  right: 30px;
-  bottom: 25px;
-  animation: nodeFloat 4.5s infinite alternate;
-}
-
-.activate-tone-btn {
-  background: linear-gradient(135deg, var(--blue) 0%, var(--purple) 100%);
-  border: 0;
-  color: #000000;
-  font-weight: 800;
-  font-size: 0.85rem;
-  padding: 12px 24px;
-  border-radius: 14px;
-  cursor: pointer;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 6px 20px var(--blue-glow);
-}
-
-.activate-tone-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px var(--blue-glow);
-}
-
-.activate-tone-btn.active {
-  background: var(--green);
-  box-shadow: 0 4px 15px var(--green-glow);
-}
-
 /* Split slides — stacked header, avatar left, content right */
-.deck:has(.graphics-intro-sandbox) .slide-content,
+.deck:has(.intro-splash-content) .slide-content,
 .deck:has(.graphics-problem-sandbox) .slide-content {
   display: flex;
   flex-direction: column;
@@ -1465,19 +1383,19 @@ body {
   gap: 20px;
 }
 
-.deck:has(.graphics-intro-sandbox) .copy-panel,
+.deck:has(.intro-splash-content) .copy-panel,
 .deck:has(.graphics-problem-sandbox) .copy-panel {
   width: 100%;
   max-width: none;
 }
 
-.deck:has(.graphics-intro-sandbox) .cinematic-title,
+.deck:has(.intro-splash-content) .cinematic-title,
 .deck:has(.graphics-problem-sandbox) .cinematic-title {
   font-size: clamp(1.65rem, 2.8vw, 2.35rem);
   line-height: 1.15;
 }
 
-.deck:has(.graphics-intro-sandbox) .visual-panel,
+.deck:has(.intro-splash-content) .visual-panel,
 .deck:has(.graphics-problem-sandbox) .visual-panel {
   flex-direction: row;
   align-items: stretch;
@@ -1487,7 +1405,7 @@ body {
   width: 100%;
 }
 
-.deck:has(.graphics-intro-sandbox) .actor-canvas,
+.deck:has(.intro-splash-content) .actor-canvas,
 .deck:has(.graphics-problem-sandbox) .actor-canvas {
   flex: 0 0 min(280px, 28%);
   width: auto;
@@ -1497,7 +1415,7 @@ body {
   justify-content: center;
 }
 
-.deck:has(.graphics-intro-sandbox) .stage-visual,
+.deck:has(.intro-splash-content) .stage-visual,
 .deck:has(.graphics-problem-sandbox) .stage-visual {
   flex: 1;
   min-width: 0;
@@ -1507,7 +1425,7 @@ body {
   justify-content: flex-start;
 }
 
-.deck:has(.graphics-intro-sandbox) .split-slide-main,
+.deck:has(.intro-splash-content) .split-slide-main,
 .deck:has(.graphics-problem-sandbox) .split-slide-main {
   display: flex;
   flex-direction: column;
@@ -1516,25 +1434,25 @@ body {
   height: 100%;
 }
 
-.deck:has(.graphics-intro-sandbox) .split-slide-points,
+.deck:has(.intro-splash-content) .split-slide-points,
 .deck:has(.graphics-problem-sandbox) .split-slide-points {
   margin: 0;
 }
 
-.deck:has(.graphics-intro-sandbox) .graphics-intro-sandbox,
+.deck:has(.intro-splash-content) .intro-splash-content,
 .deck:has(.graphics-problem-sandbox) .graphics-problem-sandbox {
   flex: 1;
   justify-content: center;
 }
 
 @media (max-width: 980px) {
-  .deck:has(.graphics-intro-sandbox) .visual-panel,
+  .deck:has(.intro-splash-content) .visual-panel,
   .deck:has(.graphics-problem-sandbox) .visual-panel {
     flex-direction: column;
     align-items: center;
   }
 
-  .deck:has(.graphics-intro-sandbox) .actor-canvas,
+  .deck:has(.intro-splash-content) .actor-canvas,
   .deck:has(.graphics-problem-sandbox) .actor-canvas {
     flex: 0 0 auto;
     width: 100%;
@@ -7467,8 +7385,9 @@ body {
   height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  min-height: 420px;
+  justify-content: flex-start;
+  min-height: 0;
+  overflow-y: auto;
 }
 
 /* Step 1 grid */
@@ -7945,27 +7864,131 @@ body {
 .slide-content-solution {
   grid-template-columns: 1fr;
   align-items: stretch;
+  min-height: 0;
+  height: 100%;
+  overflow: hidden;
 }
 
 .wiki-sim-layout {
   grid-column: 1 / -1;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+  display: grid;
+  grid-template-rows: auto auto minmax(0, 1fr);
+  gap: 10px;
   width: 100%;
-  min-height: 62vh;
+  height: 100%;
+  min-height: 0;
 }
 
 .wiki-sim-header {
   width: 100%;
 }
 
+.wiki-sim-header .eyebrow-badge {
+  margin-bottom: 8px;
+  padding: 4px 12px;
+}
+
+.wiki-sim-subtitle {
+  margin: 4px 0 0;
+  font-size: clamp(0.88rem, 1.15vw, 1rem);
+  line-height: 1.4;
+}
+
+.wiki-sim-step-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+  flex-shrink: 0;
+}
+
+.wiki-sim-step-toolbar {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+}
+
+.wiki-sim-step-label {
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: var(--blue);
+  white-space: nowrap;
+}
+
+.wiki-sim-step-nav {
+  min-width: 0;
+}
+
+.wiki-sim-step-dots.stepper-dots-container {
+  flex-direction: row;
+  flex-wrap: nowrap;
+  width: 100%;
+  margin: 0;
+  padding: 3px;
+  gap: 3px;
+  justify-content: stretch;
+}
+
+.wiki-sim-step-dots .stepper-dot-btn {
+  flex: 1 1 0;
+  min-width: 0;
+  padding: 6px 0;
+  font-size: 0.68rem;
+}
+
+.wiki-sim-step-nav-buttons.stepper-navigation-bar {
+  margin: 0;
+  padding: 0;
+  flex-shrink: 0;
+  gap: 6px;
+}
+
+.wiki-sim-step-nav-buttons .stepper-nav-btn {
+  flex: 0 0 auto;
+  min-width: 68px;
+  padding: 6px 10px;
+  font-size: 0.74rem;
+}
+
+.wiki-sim-step-bar .wiki-sim-progress-track {
+  width: 100%;
+  height: 4px;
+  border-radius: 99px;
+  background: rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+
+.wiki-sim-step-copy {
+  display: grid;
+  grid-template-columns: minmax(150px, 32%) minmax(0, 1fr);
+  gap: 12px;
+  align-items: start;
+}
+
+.wiki-sim-step-copy .step-title-text {
+  font-size: 0.88rem;
+  margin: 0;
+  padding: 0;
+  border-bottom: 0;
+}
+
+.wiki-sim-step-copy .step-normal-txt {
+  font-size: 0.78rem;
+  line-height: 1.42;
+  margin: 0;
+}
+
 .wiki-sim-interactive-row {
   display: grid;
-  grid-template-columns: min(300px, 30%) minmax(0, 1fr);
-  gap: 20px;
+  grid-template-columns: min(190px, 22%) minmax(0, 1fr);
+  gap: 12px;
   align-items: stretch;
-  min-height: 420px;
+  min-height: 0;
+  height: 100%;
 }
 
 .wiki-sim-avatar-panel {
@@ -7973,59 +7996,26 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
-  min-height: 380px;
-  padding-bottom: 8px;
+  min-height: 0;
+  padding-bottom: 4px;
 }
 
 .wiki-sim-sandbox-panel {
   display: flex;
   min-width: 0;
+  min-height: 0;
+  overflow: hidden;
   background: rgba(255, 255, 255, 0.02);
   border: 1px dashed rgba(255, 255, 255, 0.08);
-  border-radius: 28px;
-  padding: 16px;
+  border-radius: 18px;
+  padding: 10px;
 }
 
-.wiki-sim-controls {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  width: 100%;
-  padding-top: 4px;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
-}
-
-.wiki-sim-controls .wiki-sim-goal {
-  margin: 0;
-}
-
-.wiki-sim-controls .stepper-content-body {
-  min-height: 120px;
-}
-
-.wiki-sim-sidebar,
 .wiki-sim-stage {
   display: flex;
   flex-direction: column;
   min-width: 0;
-}
-
-.wiki-sim-progress {
-  margin: 0.75rem 0 0.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  font-size: var(--present-text-body-sm);
-  font-weight: 800;
-  color: var(--blue);
-}
-
-.wiki-sim-progress-track {
-  width: 100%;
-  height: 6px;
-  border-radius: 99px;
-  background: rgba(255, 255, 255, 0.08);
-  overflow: hidden;
+  min-height: 0;
 }
 
 .wiki-sim-progress-fill {
@@ -8046,18 +8036,18 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
-  gap: 14px;
+  gap: 8px;
   width: 100%;
   height: 100%;
 }
 
 .wiki-student-avatar {
-  width: 180px;
-  height: 180px;
+  width: 118px;
+  height: 118px;
   border-radius: 50%;
   object-fit: cover;
-  border: 4px solid var(--yellow);
-  box-shadow: 0 8px 35px rgba(252, 196, 25, 0.35);
+  border: 3px solid var(--yellow);
+  box-shadow: 0 6px 24px rgba(252, 196, 25, 0.3);
   flex-shrink: 0;
   animation: avatarFloat 4s ease-in-out infinite;
 }
@@ -8078,10 +8068,10 @@ body {
   position: relative;
   background: #ffffff;
   color: #050508;
-  border-radius: 18px;
-  padding: 12px 16px;
-  max-width: 240px;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+  border-radius: 14px;
+  padding: 8px 12px;
+  max-width: 170px;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.3);
 }
 
 .wiki-student-bubble .bubble-tail {
@@ -8301,18 +8291,105 @@ body {
 }
 
 @media (max-width: 980px) {
-  .wiki-sim-interactive-row {
+  .wiki-sim-step-toolbar {
     grid-template-columns: 1fr;
+    gap: 8px;
   }
 
-  .wiki-sim-avatar-panel {
+  .wiki-sim-step-nav-buttons.stepper-navigation-bar {
+    width: 100%;
+  }
+
+  .wiki-sim-step-nav-buttons .stepper-nav-btn {
+    flex: 1;
+  }
+
+  .wiki-sim-step-copy {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+
+  .wiki-sim-interactive-row {
+    grid-template-columns: 1fr;
     min-height: 260px;
   }
 
-  .wiki-sim-avatar-panel .wiki-student-avatar {
-    width: 140px;
-    height: 140px;
+  .wiki-sim-avatar-panel {
+    min-height: 180px;
   }
+
+  .wiki-sim-avatar-panel .wiki-student-avatar {
+    width: 100px;
+    height: 100px;
+  }
+}
+
+/* Compact sandbox content inside the Wiki Survey simulation */
+.wiki-sim-sandbox-panel .step-initial-options,
+.wiki-sim-sandbox-panel .step-pairwise-simulator,
+.wiki-sim-sandbox-panel .step-add-idea,
+.wiki-sim-sandbox-panel .step-filter-ideas,
+.wiki-sim-sandbox-panel .step-score-table,
+.wiki-sim-sandbox-panel .step-new-ideas-analysis,
+.wiki-sim-sandbox-panel .step-open-question {
+  padding: 0.75rem;
+}
+
+.wiki-sim-sandbox-panel .visual-badge {
+  margin-bottom: 0.55rem;
+  padding: 3px 8px;
+  font-size: 0.66rem;
+}
+
+.wiki-sim-sandbox-panel .options-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.wiki-sim-sandbox-panel .option-tile {
+  padding: 6px 8px;
+  gap: 6px;
+}
+
+.wiki-sim-sandbox-panel .option-tile .tile-txt {
+  font-size: 0.72rem;
+}
+
+.wiki-sim-sandbox-panel .comparison-prompt {
+  font-size: 0.82rem;
+  margin-bottom: 0.55rem;
+}
+
+.wiki-sim-sandbox-panel .pairwise-vote-card {
+  min-height: 68px;
+  padding: 0.65rem 0.45rem;
+}
+
+.wiki-sim-sandbox-panel .pairwise-vote-card .card-txt {
+  font-size: 0.74rem;
+}
+
+.wiki-sim-sandbox-panel .wiki-review-grid.scrollable {
+  max-height: 170px;
+}
+
+.wiki-sim-sandbox-panel .wiki-bar-chart {
+  margin-top: 8px;
+  gap: 6px;
+}
+
+.wiki-sim-sandbox-panel .wiki-bar-track {
+  height: 10px;
+}
+
+.wiki-sim-sandbox-panel .wiki-final-explanation {
+  padding: 8px 10px;
+  font-size: 0.82rem;
+  line-height: 1.45;
+}
+
+.deck > .slide-content {
+  min-height: 0;
 }
 
 .next-round-simulator-btn:hover {

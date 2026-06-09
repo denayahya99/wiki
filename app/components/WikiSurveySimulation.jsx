@@ -543,77 +543,83 @@ export default function WikiSurveySimulation({ playSound }) {
       <header className="wiki-sim-header">
         <span className="eyebrow-badge">Act III: The Solution</span>
         <h1 className="cinematic-title">What Are Wiki Surveys?</h1>
-        <p className="subtitle">Wiki Surveys combine openness with quantification.</p>
+        <p className="subtitle wiki-sim-subtitle">
+          Wiki Surveys combine openness with quantification.
+        </p>
       </header>
 
-      <div className="wiki-sim-interactive-row">
-        <div className="wiki-sim-avatar-panel">
-          <div className="wiki-student-guide animate-fadeIn" key={step}>
-            <div className="wiki-student-bubble">
-              <p>{getSpeechForStep(step)}</p>
-              <span className="bubble-tail" />
+      <div className="wiki-sim-step-bar" aria-label="Simulation steps">
+        <div className="wiki-sim-step-toolbar">
+          <span className="wiki-sim-step-label">
+            Step {step} / {SIM_STEPS}
+          </span>
+
+          <nav className="wiki-sim-step-nav" aria-label="Step navigation">
+            <div className="stepper-dots-container wiki-sim-step-dots">
+              {Array.from({ length: SIM_STEPS }, (_, index) => index + 1).map((stepNumber) => (
+                <button
+                  key={stepNumber}
+                  type="button"
+                  className={`stepper-dot-btn ${step === stepNumber ? "active" : ""}`}
+                  onClick={() => goToStep(stepNumber)}
+                  aria-label={`Go to step ${stepNumber}`}
+                  aria-current={step === stepNumber ? "step" : undefined}
+                >
+                  {stepNumber}
+                </button>
+              ))}
             </div>
-            <img src="/dina_memoji.png" alt="Student avatar" className="wiki-student-avatar" />
-            <span className="wiki-student-label">Student</span>
+          </nav>
+
+          <div className="stepper-navigation-bar wiki-sim-step-nav-buttons">
+            <button
+              type="button"
+              className="stepper-nav-btn prev"
+              disabled={step === 1}
+              onClick={() => goToStep(step - 1)}
+            >
+              ← Prev
+            </button>
+            <button
+              type="button"
+              className="stepper-nav-btn next"
+              disabled={step === SIM_STEPS || !canGoNext}
+              onClick={() => goToStep(step + 1)}
+            >
+              Next →
+            </button>
           </div>
         </div>
 
-        <div className="wiki-sim-sandbox-panel">
-          <div className="graphics-solution-sandbox wiki-step-sandbox">{renderStage()}</div>
+        <div className="wiki-sim-progress-track">
+          <span
+            className="wiki-sim-progress-fill"
+            style={{ width: `${(step / SIM_STEPS) * 100}%` }}
+          />
+        </div>
+
+        <div className="wiki-sim-step-copy animate-fadeIn" key={step}>
+          <h3 className="step-title-text">{STEP_COPY[step - 1].title}</h3>
+          <p className="step-normal-txt">{STEP_COPY[step - 1].body}</p>
         </div>
       </div>
 
-      <div className="wiki-sim-controls">
-        <p className="step-normal-txt wiki-sim-goal">
-          Simulation goal: show how a Wiki Survey works using a campus improvement example.
-        </p>
-
-        <div className="wiki-sim-progress">
-          <span>
-            Step {step} / {SIM_STEPS}
-          </span>
-          <div className="wiki-sim-progress-track">
-            <span className="wiki-sim-progress-fill" style={{ width: `${(step / SIM_STEPS) * 100}%` }} />
+      <div className="wiki-sim-stage">
+        <div className="wiki-sim-interactive-row">
+          <div className="wiki-sim-avatar-panel">
+            <div className="wiki-student-guide animate-fadeIn" key={step}>
+              <div className="wiki-student-bubble">
+                <p>{getSpeechForStep(step)}</p>
+                <span className="bubble-tail" />
+              </div>
+              <img src="/dina_memoji.png" alt="Student avatar" className="wiki-student-avatar" />
+              <span className="wiki-student-label">Student</span>
+            </div>
           </div>
-        </div>
 
-        <div className="stepper-dots-container">
-          {Array.from({ length: SIM_STEPS }, (_, index) => index + 1).map((stepNumber) => (
-            <button
-              key={stepNumber}
-              type="button"
-              className={`stepper-dot-btn ${step === stepNumber ? "active" : ""}`}
-              onClick={() => goToStep(stepNumber)}
-            >
-              {stepNumber}
-            </button>
-          ))}
-        </div>
-
-        <div className="stepper-content-body animate-fadeIn" key={step}>
-          <div className="step-panel-details">
-            <h3 className="step-title-text">{STEP_COPY[step - 1].title}</h3>
-            <p className="step-normal-txt">{STEP_COPY[step - 1].body}</p>
+          <div className="wiki-sim-sandbox-panel">
+            <div className="graphics-solution-sandbox wiki-step-sandbox">{renderStage()}</div>
           </div>
-        </div>
-
-        <div className="stepper-navigation-bar">
-          <button
-            type="button"
-            className="stepper-nav-btn prev"
-            disabled={step === 1}
-            onClick={() => goToStep(step - 1)}
-          >
-            ← Previous
-          </button>
-          <button
-            type="button"
-            className="stepper-nav-btn next"
-            disabled={step === SIM_STEPS || !canGoNext}
-            onClick={() => goToStep(step + 1)}
-          >
-            Next Step →
-          </button>
         </div>
       </div>
     </div>

@@ -231,6 +231,20 @@ const slides = [
     closing: "Interaction: Is it easier to choose between two options or rank ten options?"
   },
   {
+    eyebrow: "Act XII: Mathematics",
+    title: "From Pairwise Votes to an Opinion Matrix",
+    subtitle: "The matrix helps us estimate how much each student values each idea.",
+    actor: "scholar",
+    scene: "matrix_theta",
+    points: [
+      "Three ideas: practice sessions, transportation, study spaces.",
+      "Students vote in pairs — not full rankings.",
+      "The matrix rows are students; columns are ideas.",
+      "Averages become simple scores and a final ranking."
+    ],
+    closing: "In the article, a more advanced model is used. This is the classroom version."
+  },
+  {
     eyebrow: "Act X: Platforms",
     title: "All Our Ideas",
     subtitle: "The method was implemented in a real online platform.",
@@ -273,20 +287,6 @@ const slides = [
       "One strong user framing was: \"Teach to think, not to regurgitate.\""
     ],
     closing: "What to say: \"The OECD case shows that Wiki Surveys can also work in global education policy. Participants can contribute not only content, but also meaningful language.\""
-  },
-  {
-    eyebrow: "Act XII: Mathematics",
-    title: "From Pairwise Votes to an Opinion Matrix",
-    subtitle: "The matrix helps us estimate how much each student values each idea.",
-    actor: "scholar",
-    scene: "matrix_theta",
-    points: [
-      "Three ideas: practice sessions, transportation, study spaces.",
-      "Students vote in pairs — not full rankings.",
-      "The matrix rows are students; columns are ideas.",
-      "Averages become simple scores and a final ranking."
-    ],
-    closing: "In the article, a more advanced model is used. This is the classroom version."
   },
   {
     eyebrow: "Act XIII: Results",
@@ -364,10 +364,10 @@ const shortMapTitles = [
   "Beyond Other",
   "Adaptivity",
   "Pairwise Benefits",
+  "Opinion Matrix",
   "All Our Ideas",
   "NYC Case",
   "OECD Case",
-  "Opinion Matrix",
   "Main Results",
   "User Ideas",
   "Limitations",
@@ -414,9 +414,6 @@ export default function Presentation() {
   const [selectedFramingIdx, setSelectedFramingIdx] = useState(null);
   const [framingFeedback, setFramingFeedback] = useState("");
   const [framingAttempts, setFramingAttempts] = useState(0);
-
-  // Slide 1: Welcome splash tone trigger
-  const [toneActivated, setToneActivated] = useState(false);
 
   // Campus Closed Survey slide: step 0=intro, 1-3=student answers, 4=result
   const [campusClosedStep, setCampusClosedStep] = useState(0);
@@ -558,9 +555,8 @@ export default function Presentation() {
 
   // Slide 10: Matrix Theta Heat estimation — moved to OpinionMatrixSimulation
 
-  // Slide 11: Case study metric dashboards
-  // Derived from slide index — no toggle needed
-  const activeCaseStudy = current === 16 ? "oecd" : "planyc";
+  // Case study metric dashboards — derived from slide title
+  const activeCaseStudy = slide.title.includes("OECD") ? "oecd" : "planyc";
 
   // Slide 12: Horizontal ranking results & toggles
   const [revealAuthorship, setRevealAuthorship] = useState(false);
@@ -961,13 +957,7 @@ export default function Presentation() {
     setFramingFeedback("");
   };
 
-  // Slide 1 Welcome tone trigger
-  const handleActivateTone = () => {
-    setToneActivated(true);
-    playSound("unlock");
-  };
-
-  // Slide 2 Rigidity sweep trigger
+  // Slide 19 Qualitative Framing selector handlers
   useEffect(() => {
     const balanced = rigidityVal >= 42 && rigidityVal <= 58;
     if (balanced !== isInSweetZone) {
@@ -1621,7 +1611,7 @@ export default function Presentation() {
 
               {/* SLIDE 2 (was 1): Welcome Splash & Tone Activator */}
               {slide.scene === "intro_splash" && (
-                <div className="split-slide-main">
+                <div className="split-slide-main intro-splash-content">
                   {slide.points?.length > 0 && (
                     <ul className="point-list split-slide-points">
                       {slide.points.map((point, index) => (
@@ -1632,27 +1622,6 @@ export default function Presentation() {
                       ))}
                     </ul>
                   )}
-
-                  <div className="graphics-intro-sandbox">
-                    <p className="widget-caption">Master Presentation Interactive Portal</p>
-
-                    <div className="welcome-splash-panel">
-                      <div className="words-matrix-glow">
-                        <span className="matrix-word float-1">Qualitative</span>
-                        <span className="matrix-word float-2">Quantitative</span>
-                        <span className="matrix-word float-3">Adaptive</span>
-                        <span className="matrix-word float-4">Wikipedia</span>
-                        <span className="matrix-word float-5">Rigor</span>
-                      </div>
-
-                      <button
-                        className={`activate-tone-btn ${toneActivated ? "active" : ""}`}
-                        onClick={handleActivateTone}
-                      >
-                        {toneActivated ? " Synthesizer Activated" : " Activate Tone Synthesizer"}
-                      </button>
-                    </div>
-                  </div>
                 </div>
               )}
 
