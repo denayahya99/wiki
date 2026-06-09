@@ -14,6 +14,9 @@
   --glass-glow: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 100%);
   --shadow-premium: 0 30px 100px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.08);
   --ink: #ffffff;
+  --present-text-body: 1.05rem;
+  --present-text-body-sm: 0.92rem;
+  --present-text-title: 1.35rem;
 }
 
 /* --- Theme 1: Galactic Nebula (Default Cosmic Theme) --- */
@@ -597,9 +600,9 @@ body {
 
 .subtitle {
   margin: 14px 0 0;
-  font-size: clamp(1rem, 1.6vw, 1.2rem);
+  font-size: clamp(1.08rem, 1.7vw, 1.35rem);
   color: var(--muted);
-  line-height: 1.5;
+  line-height: 1.55;
   font-weight: 500;
 }
 
@@ -645,9 +648,9 @@ body {
 
 .story-point p {
   margin: 0;
-  font-size: 0.95rem;
-  color: rgba(255, 255, 255, 0.85);
-  line-height: 1.45;
+  font-size: var(--present-text-body);
+  color: rgba(255, 255, 255, 0.88);
+  line-height: 1.6;
 }
 
 /* Quote structures */
@@ -672,10 +675,10 @@ body {
 
 .closing-quote p {
   margin: 0;
-  font-size: 0.92rem;
+  font-size: var(--present-text-body);
   font-weight: 600;
   color: var(--green);
-  line-height: 1.4;
+  line-height: 1.55;
 }
 
 /* --- Graphic Panel Columns --- */
@@ -715,9 +718,9 @@ body {
 
 .actor-speech-bubble p {
   margin: 0;
-  font-size: 0.82rem;
+  font-size: var(--present-text-body-sm);
   font-weight: 800;
-  line-height: 1.35;
+  line-height: 1.4;
 }
 
 .speech-action-btn {
@@ -1362,7 +1365,7 @@ body {
 }
 
 .widget-caption {
-  font-size: 0.8rem;
+  font-size: var(--present-text-body-sm);
   font-weight: 800;
   text-transform: uppercase;
   color: var(--purple);
@@ -1451,6 +1454,92 @@ body {
 .activate-tone-btn.active {
   background: var(--green);
   box-shadow: 0 4px 15px var(--green-glow);
+}
+
+/* Split slides — stacked header, avatar left, content right */
+.deck:has(.graphics-intro-sandbox) .slide-content,
+.deck:has(.graphics-problem-sandbox) .slide-content {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 20px;
+}
+
+.deck:has(.graphics-intro-sandbox) .copy-panel,
+.deck:has(.graphics-problem-sandbox) .copy-panel {
+  width: 100%;
+  max-width: none;
+}
+
+.deck:has(.graphics-intro-sandbox) .cinematic-title,
+.deck:has(.graphics-problem-sandbox) .cinematic-title {
+  font-size: clamp(1.65rem, 2.8vw, 2.35rem);
+  line-height: 1.15;
+}
+
+.deck:has(.graphics-intro-sandbox) .visual-panel,
+.deck:has(.graphics-problem-sandbox) .visual-panel {
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: stretch;
+  gap: 20px;
+  min-height: 0;
+  width: 100%;
+}
+
+.deck:has(.graphics-intro-sandbox) .actor-canvas,
+.deck:has(.graphics-problem-sandbox) .actor-canvas {
+  flex: 0 0 min(280px, 28%);
+  width: auto;
+  height: auto;
+  min-height: 340px;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.deck:has(.graphics-intro-sandbox) .stage-visual,
+.deck:has(.graphics-problem-sandbox) .stage-visual {
+  flex: 1;
+  min-width: 0;
+  min-height: 320px;
+  padding: 16px;
+  align-items: stretch;
+  justify-content: flex-start;
+}
+
+.deck:has(.graphics-intro-sandbox) .split-slide-main,
+.deck:has(.graphics-problem-sandbox) .split-slide-main {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  height: 100%;
+}
+
+.deck:has(.graphics-intro-sandbox) .split-slide-points,
+.deck:has(.graphics-problem-sandbox) .split-slide-points {
+  margin: 0;
+}
+
+.deck:has(.graphics-intro-sandbox) .graphics-intro-sandbox,
+.deck:has(.graphics-problem-sandbox) .graphics-problem-sandbox {
+  flex: 1;
+  justify-content: center;
+}
+
+@media (max-width: 980px) {
+  .deck:has(.graphics-intro-sandbox) .visual-panel,
+  .deck:has(.graphics-problem-sandbox) .visual-panel {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .deck:has(.graphics-intro-sandbox) .actor-canvas,
+  .deck:has(.graphics-problem-sandbox) .actor-canvas {
+    flex: 0 0 auto;
+    width: 100%;
+    min-height: 220px;
+  }
 }
 
 /* ==========================================
@@ -1966,6 +2055,11 @@ body {
 /* ==========================================
    ACT V: Greediness Power Law Curves
    ========================================== */
+.greedy-sidebar .cinematic-title {
+  font-size: clamp(1.65rem, 2.8vw, 2.35rem);
+  line-height: 1.15;
+}
+
 .graphics-greedy-sandbox {
   width: 100%;
   display: flex;
@@ -2025,6 +2119,11 @@ body {
   flex-direction: column;
 }
 
+.collaborative-sidebar .cinematic-title {
+  font-size: clamp(1.45rem, 2.4vw, 2rem);
+  line-height: 1.15;
+}
+
 .collab-step-guide {
   margin-top: 10px;
   padding: 12px;
@@ -2048,9 +2147,9 @@ body {
 
 .collab-step-title {
   margin: 0 0 10px;
-  font-size: 0.82rem;
+  font-size: var(--present-text-body);
   font-weight: 800;
-  line-height: 1.35;
+  line-height: 1.4;
   color: #fff;
 }
 
@@ -2074,14 +2173,14 @@ body {
 
 .collab-step-text {
   margin: 0;
-  font-size: 0.72rem;
-  line-height: 1.4;
+  font-size: var(--present-text-body-sm);
+  line-height: 1.55;
   color: var(--ink);
 }
 
 .collab-step-muted {
   color: var(--muted);
-  font-size: 0.68rem;
+  font-size: 0.95rem;
 }
 
 .collab-step-deep {
@@ -2274,8 +2373,8 @@ body {
 }
 
 .collaborative-meaning-card .meaning-txt {
-  font-size: 0.76rem;
-  line-height: 1.4;
+  font-size: var(--present-text-body-sm);
+  line-height: 1.55;
   color: var(--ink);
   margin: 0;
 }
@@ -2509,6 +2608,11 @@ body {
   flex-direction: column;
 }
 
+.adaptive-sidebar .cinematic-title {
+  font-size: clamp(1.45rem, 2.4vw, 2rem);
+  line-height: 1.15;
+}
+
 .adaptive-scenarios-stack {
   display: flex;
   flex-direction: column;
@@ -2523,7 +2627,7 @@ body {
   padding: 12px 16px;
   border-radius: 14px;
   font-family: var(--font-title);
-  font-size: 0.76rem;
+  font-size: var(--present-text-body-sm);
   font-weight: 700;
   cursor: pointer;
   text-align: left;
@@ -2564,8 +2668,8 @@ body {
 }
 
 .adaptive-meaning-card .meaning-txt {
-  font-size: 0.76rem;
-  line-height: 1.4;
+  font-size: var(--present-text-body-sm);
+  line-height: 1.55;
   color: var(--ink);
   margin: 0;
 }
@@ -3188,6 +3292,11 @@ body {
 /* ==========================================
    ACT IX: Replica skipping workflows
    ========================================== */
+.deck:has(.graphics-allourideas-sandbox) .cinematic-title {
+  font-size: clamp(1.45rem, 2.4vw, 2rem);
+  line-height: 1.15;
+}
+
 .graphics-allourideas-sandbox {
   width: 100%;
   display: flex;
@@ -3529,6 +3638,11 @@ body {
   margin-top: 6px;
 }
 
+.matrix-sidebar .cinematic-title {
+  font-size: clamp(1.45rem, 2.4vw, 2rem);
+  line-height: 1.15;
+}
+
 @media (max-width: 900px) {
   .matrix-flow-pipeline {
     grid-template-columns: 1fr 1fr;
@@ -3603,6 +3717,11 @@ body {
 /* ==========================================
    ACT XI: Case Studies Dashboard
    ========================================== */
+.deck:has(.graphics-case-studies-sandbox) .cinematic-title {
+  font-size: clamp(1.45rem, 2.4vw, 2rem);
+  line-height: 1.15;
+}
+
 .graphics-case-studies-sandbox {
   width: 100%;
   display: flex;
@@ -3808,6 +3927,22 @@ body {
 /* ==========================================
    ACT XIII: Strengths Scorecard
    ========================================== */
+.deck:has(.graphics-strengths-sandbox) .cinematic-title {
+  font-size: clamp(1.45rem, 2.4vw, 2rem);
+  line-height: 1.15;
+}
+
+.deck:has(.graphics-graph-yield-sandbox) .cinematic-title,
+.deck:has(.graphics-qualitative-sandbox) .cinematic-title,
+.deck:has(.graphics-limitations-sandbox) .cinematic-title,
+.deck:has(.graphics-conclusion-sandbox) .cinematic-title,
+.deck:has(.graphics-principles-sandbox) .cinematic-title,
+.deck:has(.campus-survey-sandbox):not(:has(.open-interview-sandbox)) .cinematic-title,
+.wiki-sim-header .cinematic-title {
+  font-size: clamp(1.45rem, 2.4vw, 2rem);
+  line-height: 1.15;
+}
+
 .graphics-strengths-sandbox {
   width: 100%;
 }
@@ -3826,7 +3961,7 @@ body {
 .benefit-vote-question {
   margin: 0;
   color: var(--ink);
-  font-size: 0.86rem;
+  font-size: var(--present-text-body);
   font-weight: 900;
   text-align: center;
 }
@@ -3845,9 +3980,9 @@ body {
   background: rgba(255, 255, 255, 0.03);
   color: var(--ink);
   cursor: pointer;
-  font-size: 0.78rem;
+  font-size: var(--present-text-body-sm);
   font-weight: 900;
-  line-height: 1.25;
+  line-height: 1.3;
   transition: all 0.2s ease;
 }
 
@@ -3871,9 +4006,9 @@ body {
 .benefit-vote-result {
   margin: 0;
   color: var(--muted);
-  font-size: 0.7rem;
+  font-size: var(--present-text-body-sm);
   font-weight: 700;
-  line-height: 1.4;
+  line-height: 1.5;
   text-align: center;
 }
 
@@ -4152,6 +4287,19 @@ body {
   justify-content: space-between;
   align-items: center;
   margin-top: 24px;
+  gap: 12px;
+}
+
+.controls-center {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.deck-utilities {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .control-btn {
@@ -4161,7 +4309,7 @@ body {
   padding: 10px 20px;
   border-radius: 16px;
   font-weight: 700;
-  font-size: 0.88rem;
+  font-size: var(--present-text-body-sm);
   cursor: pointer;
   transition: all 0.25s ease;
 }
@@ -4580,16 +4728,16 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 24px;
+  gap: 16px;
   overflow: hidden;
-  padding: 24px 16px;
+  padding: 16px 12px;
 }
 
 /* Animated background orbit rings */
 .cover-orbit-ring {
   position: absolute;
-  width: 360px;
-  height: 360px;
+  width: 260px;
+  height: 260px;
   border: 1.5px solid var(--blue-glow);
   border-radius: 50%;
   top: 50%;
@@ -4601,8 +4749,8 @@ body {
 }
 
 .cover-orbit-ring.ring-2 {
-  width: 480px;
-  height: 480px;
+  width: 340px;
+  height: 340px;
   border-color: var(--purple-glow);
   animation-duration: 28s;
   animation-direction: reverse;
@@ -4635,13 +4783,13 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 28px;
+  gap: 18px;
   margin-top: 0;
 }
 
 .cover-presenters-row {
   display: flex;
-  gap: 48px;
+  gap: 32px;
   align-items: flex-end;
   justify-content: center;
   flex-wrap: wrap;
@@ -4693,8 +4841,8 @@ body {
 /* Avatar circle wrappers */
 .cover-avatar-wrap {
   position: relative;
-  width: 220px;
-  height: 220px;
+  width: 170px;
+  height: 170px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -4715,8 +4863,8 @@ body {
 }
 
 .cover-avatar-img {
-  width: 196px;
-  height: 196px;
+  width: 148px;
+  height: 148px;
   object-fit: cover;
   border-radius: 50%;
   z-index: 2;
@@ -4788,12 +4936,18 @@ body {
   align-items: center;
   justify-content: center;
   text-align: center;
-  min-height: 68vh;
+  min-height: 58vh;
 }
 
 .deck:has(.graphics-cover-sandbox) .copy-panel {
   align-items: center;
   max-width: 920px;
+}
+
+.deck:has(.graphics-cover-sandbox) .cinematic-title {
+  font-size: clamp(1.45rem, 2.6vw, 2.15rem);
+  line-height: 1.2;
+  max-width: 880px;
 }
 
 .deck:has(.graphics-cover-sandbox) .eyebrow-badge {
@@ -4803,7 +4957,7 @@ body {
 .deck:has(.graphics-cover-sandbox) .visual-panel {
   width: 100%;
   justify-content: center;
-  min-height: 520px;
+  min-height: 360px;
   padding-top: 8px;
 }
 
@@ -4812,17 +4966,17 @@ body {
 }
 
 .deck:has(.graphics-cover-sandbox) .cover-avatar-wrap {
-  width: 300px;
-  height: 300px;
+  width: 170px;
+  height: 170px;
 }
 
 .deck:has(.graphics-cover-sandbox) .cover-avatar-img {
-  width: 268px;
-  height: 268px;
+  width: 148px;
+  height: 148px;
 }
 
 .deck:has(.graphics-cover-sandbox) .cover-presenter-name {
-  font-size: 1.15rem;
+  font-size: 1rem;
 }
 
 .deck:has(.graphics-cover-sandbox) .cover-presenter-role {
@@ -4903,9 +5057,9 @@ body {
   background: linear-gradient(135deg, var(--blue) 0%, var(--purple) 100%);
   border: none;
   color: #ffffff;
-  padding: 10px 18px;
+  padding: 12px 20px;
   border-radius: 20px;
-  font-size: 0.8rem;
+  font-size: var(--present-text-body-sm);
   font-weight: 800;
   cursor: pointer;
   box-shadow: 0 4px 15px var(--blue-glow);
@@ -4918,13 +5072,106 @@ body {
 }
 
 .graph-stats-label {
-  font-size: 0.72rem;
+  font-size: var(--present-text-body-sm);
   color: var(--muted);
+}
+
+/* Wikipedia inspiration slide — full-width header + larger copy */
+.deck:has(.graphics-wikipedia-sandbox) .slide-content {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 20px;
+}
+
+.deck:has(.graphics-wikipedia-sandbox) .copy-panel {
+  width: 100%;
+  max-width: none;
+}
+
+.deck:has(.graphics-wikipedia-sandbox) .cinematic-title {
+  font-size: clamp(1.65rem, 2.8vw, 2.35rem);
+  line-height: 1.15;
+}
+
+.deck:has(.graphics-wikipedia-sandbox) .subtitle {
+  max-width: none;
+  margin-top: 10px;
+}
+
+.deck:has(.graphics-wikipedia-sandbox) .point-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 14px;
+}
+
+.deck:has(.graphics-wikipedia-sandbox) .story-point {
+  padding: 16px 20px;
+}
+
+.deck:has(.graphics-wikipedia-sandbox) .visual-panel {
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: stretch;
+  gap: 20px;
+  min-height: 0;
+  width: 100%;
+}
+
+.deck:has(.graphics-wikipedia-sandbox) .actor-canvas {
+  flex: 0 0 min(280px, 28%);
+  width: auto;
+  height: auto;
+  min-height: 340px;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.deck:has(.graphics-wikipedia-sandbox) .stage-visual {
+  flex: 1;
+  min-width: 0;
+  min-height: 360px;
+  padding: 16px;
+  align-items: stretch;
+}
+
+.deck:has(.graphics-wikipedia-sandbox) .graphics-wikipedia-sandbox {
+  width: 100%;
+  max-width: none;
+  padding: 8px;
+}
+
+.deck:has(.graphics-wikipedia-sandbox) .wikipedia-graph-svg {
+  max-width: none;
+  height: 220px;
+}
+
+@media (max-width: 980px) {
+  .deck:has(.graphics-wikipedia-sandbox) .point-list {
+    grid-template-columns: 1fr;
+  }
+
+  .deck:has(.graphics-wikipedia-sandbox) .visual-panel {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .deck:has(.graphics-wikipedia-sandbox) .actor-canvas {
+    flex: 0 0 auto;
+    width: 100%;
+    min-height: 220px;
+  }
 }
 
 /* ==========================================
    SLIDE 8: Fat Head vs Long Tail simulation
    ========================================== */
+.deck:has(.graphics-fathead-grid-sandbox) .cinematic-title {
+  font-size: clamp(1.65rem, 2.8vw, 2.35rem);
+  line-height: 1.15;
+}
+
 .graphics-fathead-grid-sandbox {
   display: flex;
   flex-direction: column;
@@ -4944,9 +5191,9 @@ body {
 /* --- Different Students, Different Energy simulation --- */
 .energy-sim-caption {
   margin: 0;
-  font-size: 0.68rem;
+  font-size: var(--present-text-body-sm);
   font-weight: 700;
-  line-height: 1.4;
+  line-height: 1.5;
   text-align: center;
   color: #93c5fd;
 }
@@ -5579,6 +5826,11 @@ body {
 /* ==========================================
    SLIDE 10: Other Option Conveyor Pipeline
    ========================================== */
+.deck:has(.graphics-other-conveyor-sandbox) .cinematic-title {
+  font-size: clamp(1.45rem, 2.4vw, 2rem);
+  line-height: 1.15;
+}
+
 .graphics-other-conveyor-sandbox {
   display: flex;
   flex-direction: column;
@@ -6420,9 +6672,62 @@ body {
 }
 
 /* Stage visual is taller for campus slides */
+.deck:has(.campus-survey-sandbox) .slide-content {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 20px;
+}
+
+.deck:has(.campus-survey-sandbox) .copy-panel {
+  width: 100%;
+  max-width: none;
+}
+
+.deck:has(.campus-survey-sandbox) .visual-panel {
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: stretch;
+  gap: 20px;
+  min-height: 0;
+  width: 100%;
+}
+
+.deck:has(.campus-survey-sandbox) .actor-canvas {
+  flex: 0 0 min(300px, 30%);
+  width: auto;
+  height: auto;
+  min-height: 380px;
+  align-items: flex-end;
+  justify-content: center;
+}
+
 .deck:has(.campus-survey-sandbox) .stage-visual {
+  flex: 1;
+  min-width: 0;
   min-height: 420px;
   padding: 12px;
+  align-items: stretch;
+}
+
+.deck:has(.campus-survey-sandbox) .state-student.actor-canvas {
+  height: auto;
+  min-height: 380px;
+}
+
+.deck:has(.campus-survey-sandbox) .state-student .actor-speech-bubble {
+  bottom: 210px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 18px;
+  max-width: 240px;
+}
+
+.deck:has(.campus-survey-sandbox) .state-student .bubble-tail {
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 10px 10px 0 10px;
+  border-color: #ffffff transparent transparent transparent;
 }
 
 /* Actor canvas taller + avatar bigger for student state */
@@ -6495,7 +6800,7 @@ body {
 }
 
 .campus-tap-hint {
-  font-size: 0.75rem;
+  font-size: var(--present-text-body-sm);
   color: rgba(255,255,255,0.45);
   text-align: center;
   margin: 0.6rem 0 0 0;
@@ -6520,9 +6825,9 @@ body {
   background: rgba(99, 179, 237, 0.12);
   border: 1px solid rgba(99, 179, 237, 0.22);
   color: var(--ink);
-  font-size: 0.82rem;
+  font-size: var(--present-text-body);
   font-weight: 700;
-  line-height: 1.35;
+  line-height: 1.45;
   text-align: center;
 }
 
@@ -6630,7 +6935,7 @@ body {
 }
 
 .campus-result-text {
-  font-size: 0.88rem;
+  font-size: var(--present-text-body);
   color: var(--ink);
   line-height: 1.6;
   text-align: center;
@@ -6755,6 +7060,11 @@ body {
 }
 
 /* Open interview styles */
+.deck:has(.open-interview-sandbox) .cinematic-title {
+  font-size: clamp(1.65rem, 2.8vw, 2.35rem);
+  line-height: 1.15;
+}
+
 .open-interview-sandbox .campus-header-top {
   border-color: rgba(72, 187, 120, 0.3);
 }
@@ -6910,7 +7220,7 @@ body {
 }
 
 .step-title-text {
-  font-size: 1.15rem;
+  font-size: var(--present-text-title);
   font-weight: 800;
   font-family: var(--font-title);
   color: #fff;
@@ -6949,8 +7259,8 @@ body {
 }
 
 .narrator-quote {
-  font-size: 0.82rem;
-  line-height: 1.5;
+  font-size: var(--present-text-body);
+  line-height: 1.55;
   color: rgba(255, 255, 255, 0.9);
   margin: 0;
   font-style: italic;
@@ -6961,8 +7271,8 @@ body {
 }
 
 .step-normal-txt {
-  font-size: 0.82rem;
-  line-height: 1.5;
+  font-size: var(--present-text-body);
+  line-height: 1.6;
   color: var(--muted);
 }
 
@@ -7120,7 +7430,7 @@ body {
   border: 1.5px solid rgba(255, 255, 255, 0.1);
   color: #fff;
   font-weight: 700;
-  font-size: 0.8rem;
+  font-size: var(--present-text-body-sm);
   padding: 10px 14px;
   border-radius: 10px;
   cursor: pointer;
@@ -7639,11 +7949,58 @@ body {
 
 .wiki-sim-layout {
   grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: 1.05fr 0.95fr;
-  gap: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
   width: 100%;
   min-height: 62vh;
+}
+
+.wiki-sim-header {
+  width: 100%;
+}
+
+.wiki-sim-interactive-row {
+  display: grid;
+  grid-template-columns: min(300px, 30%) minmax(0, 1fr);
+  gap: 20px;
+  align-items: stretch;
+  min-height: 420px;
+}
+
+.wiki-sim-avatar-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  min-height: 380px;
+  padding-bottom: 8px;
+}
+
+.wiki-sim-sandbox-panel {
+  display: flex;
+  min-width: 0;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px dashed rgba(255, 255, 255, 0.08);
+  border-radius: 28px;
+  padding: 16px;
+}
+
+.wiki-sim-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  padding-top: 4px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.wiki-sim-controls .wiki-sim-goal {
+  margin: 0;
+}
+
+.wiki-sim-controls .stepper-content-body {
+  min-height: 120px;
 }
 
 .wiki-sim-sidebar,
@@ -7658,7 +8015,7 @@ body {
   display: flex;
   flex-direction: column;
   gap: 6px;
-  font-size: 0.78rem;
+  font-size: var(--present-text-body-sm);
   font-weight: 800;
   color: var(--blue);
 }
@@ -7684,37 +8041,67 @@ body {
 }
 
 .wiki-student-guide {
+  position: relative;
   display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  margin-bottom: 12px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 14px;
+  width: 100%;
+  height: 100%;
 }
 
 .wiki-student-avatar {
-  width: 64px;
-  height: 64px;
+  width: 180px;
+  height: 180px;
   border-radius: 50%;
   object-fit: cover;
-  border: 3px solid var(--pink);
-  box-shadow: 0 6px 18px var(--pink-glow);
+  border: 4px solid var(--yellow);
+  box-shadow: 0 8px 35px rgba(252, 196, 25, 0.35);
   flex-shrink: 0;
   animation: avatarFloat 4s ease-in-out infinite;
 }
 
+.wiki-student-label {
+  font-size: 0.68rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--yellow);
+  background: rgba(252, 196, 25, 0.12);
+  border: 1px solid rgba(252, 196, 25, 0.25);
+  padding: 4px 12px;
+  border-radius: 99px;
+}
+
 .wiki-student-bubble {
   position: relative;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 14px;
-  padding: 10px 12px;
-  max-width: 100%;
+  background: #ffffff;
+  color: #050508;
+  border-radius: 18px;
+  padding: 12px 16px;
+  max-width: 240px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+}
+
+.wiki-student-bubble .bubble-tail {
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 10px 10px 0 10px;
+  border-color: #ffffff transparent transparent transparent;
 }
 
 .wiki-student-bubble p {
   margin: 0;
-  font-size: 0.78rem;
+  font-size: var(--present-text-body-sm);
+  font-weight: 800;
   line-height: 1.45;
-  color: var(--ink);
+  color: #050508;
 }
 
 .wiki-submitted-ideas-list {
@@ -7908,14 +8295,23 @@ body {
   border-radius: 12px;
   background: rgba(168, 85, 247, 0.08);
   border: 1px solid rgba(168, 85, 247, 0.22);
-  font-size: 0.84rem;
-  line-height: 1.55;
+  font-size: var(--present-text-body);
+  line-height: 1.6;
   color: var(--ink);
 }
 
 @media (max-width: 980px) {
-  .wiki-sim-layout {
+  .wiki-sim-interactive-row {
     grid-template-columns: 1fr;
+  }
+
+  .wiki-sim-avatar-panel {
+    min-height: 260px;
+  }
+
+  .wiki-sim-avatar-panel .wiki-student-avatar {
+    width: 140px;
+    height: 140px;
   }
 }
 
@@ -7954,7 +8350,7 @@ body {
 
 .wiki-visual-caption {
   margin: 0.85rem 0 0;
-  font-size: 0.78rem;
+  font-size: var(--present-text-body-sm);
   color: var(--muted);
   text-align: center;
 }
@@ -8239,7 +8635,7 @@ body {
   border: 1.5px solid rgba(255, 255, 255, 0.06);
   color: var(--muted);
   font-weight: 700;
-  font-size: 0.78rem;
+  font-size: var(--present-text-body-sm);
   padding: 10px 14px;
   border-radius: 10px;
   cursor: pointer;
@@ -8283,8 +8679,8 @@ body {
 }
 
 .greedy-principle-meaning-card .meaning-txt {
-  font-size: 0.8rem;
-  line-height: 1.45;
+  font-size: var(--present-text-body);
+  line-height: 1.55;
   color: #fff;
   margin: 0;
 }
@@ -8294,7 +8690,7 @@ body {
 }
 
 .meaning-bullets {
-  font-size: 0.75rem;
+  font-size: var(--present-text-body-sm);
   color: var(--muted);
   margin: 6px 0 0;
   padding-left: 1rem;
@@ -8767,16 +9163,16 @@ svg {
   .ayalet-avatar-memoji-container,
   .cover-avatar-wrap,
   .deck:has(.graphics-cover-sandbox) .cover-avatar-wrap {
-    width: clamp(140px, 34vw, 220px);
-    height: clamp(140px, 34vw, 220px);
+    width: clamp(120px, 28vw, 170px);
+    height: clamp(120px, 28vw, 170px);
   }
 
   .dina-memoji-img,
   .ayalet-memoji-img,
   .cover-avatar-img,
   .deck:has(.graphics-cover-sandbox) .cover-avatar-img {
-    width: clamp(124px, 30vw, 196px);
-    height: clamp(124px, 30vw, 196px);
+    width: clamp(104px, 24vw, 148px);
+    height: clamp(104px, 24vw, 148px);
   }
 
   .stage-visual {
@@ -8787,6 +9183,17 @@ svg {
 
   .deck:has(.campus-survey-sandbox) .stage-visual {
     min-height: 0;
+  }
+
+  .deck:has(.campus-survey-sandbox) .visual-panel {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .deck:has(.campus-survey-sandbox) .actor-canvas {
+    flex: 0 0 auto;
+    width: 100%;
+    min-height: 240px;
   }
 
   .campus-survey-sandbox {

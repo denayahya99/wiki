@@ -540,12 +540,31 @@ export default function WikiSurveySimulation({ playSound }) {
 
   return (
     <div className="wiki-sim-layout">
-      {/* Left panel: step instructions for classroom presentation */}
-      <div className="wiki-sim-sidebar">
-        <span className="eyebrow-badge">Act III: The Campus Scenario</span>
-        <h1 className="cinematic-title">How Wiki Surveys Work</h1>
-        <p className="subtitle">Interactive campus improvement simulation</p>
-        <p className="step-normal-txt">
+      <header className="wiki-sim-header">
+        <span className="eyebrow-badge">Act III: The Solution</span>
+        <h1 className="cinematic-title">What Are Wiki Surveys?</h1>
+        <p className="subtitle">Wiki Surveys combine openness with quantification.</p>
+      </header>
+
+      <div className="wiki-sim-interactive-row">
+        <div className="wiki-sim-avatar-panel">
+          <div className="wiki-student-guide animate-fadeIn" key={step}>
+            <div className="wiki-student-bubble">
+              <p>{getSpeechForStep(step)}</p>
+              <span className="bubble-tail" />
+            </div>
+            <img src="/dina_memoji.png" alt="Student avatar" className="wiki-student-avatar" />
+            <span className="wiki-student-label">Student</span>
+          </div>
+        </div>
+
+        <div className="wiki-sim-sandbox-panel">
+          <div className="graphics-solution-sandbox wiki-step-sandbox">{renderStage()}</div>
+        </div>
+      </div>
+
+      <div className="wiki-sim-controls">
+        <p className="step-normal-txt wiki-sim-goal">
           Simulation goal: show how a Wiki Survey works using a campus improvement example.
         </p>
 
@@ -596,19 +615,6 @@ export default function WikiSurveySimulation({ playSound }) {
             Next Step →
           </button>
         </div>
-      </div>
-
-      {/* Right panel: interactive simulation stage */}
-      <div className="wiki-sim-stage">
-        <div className="wiki-student-guide animate-fadeIn">
-          <img src="/dina_memoji.png" alt="Student avatar" className="wiki-student-avatar" />
-          <div className="wiki-student-bubble">
-            <span className="bubble-tail" />
-            <p>{getSpeechForStep(step)}</p>
-          </div>
-        </div>
-
-        <div className="graphics-solution-sandbox wiki-step-sandbox">{renderStage()}</div>
       </div>
     </div>
   );

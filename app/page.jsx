@@ -16,12 +16,6 @@ import {
   Wifi,
   BookOpen,
   Sun,
-  Moon,
-  Palette,
-  Sparkles,
-  Zap,
-  Compass,
-  Snowflake,
   Volume2,
   VolumeX,
   Maximize2,
@@ -386,7 +380,6 @@ export default function Presentation() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [synthEnabled, setSynthEnabled] = useState(true);
   const [revealHidden, setRevealHidden] = useState(false);
-  const [currentTheme, setCurrentTheme] = useState("navy");
   const [isFullscreen, setIsFullscreen] = useState(false);
 
   // Global mouse coordinates and eye-tracking pupil vectors
@@ -1268,99 +1261,11 @@ export default function Presentation() {
     }
   }, [derivedActorState]);
 
-  const changeTheme = (theme) => {
-    setCurrentTheme(theme);
-    playSound("theme");
-  };
-
   return (
-    <main className={`presentation-shell theme-${currentTheme}`}>
+    <main className="presentation-shell theme-navy">
       <div className="ambient-spotlight spot-purple" />
       <div className="ambient-spotlight spot-pink" />
       <div className="ambient-spotlight spot-blue" />
-
-      {/* Presentation Toolbar */}
-      <header className="story-toolbar">
-        {/* Dynamic theme swappers */}
-        <div className="theme-selectors-container">
-          <div className="mode-toggle-group">
-            <button
-              className={`theme-pill-btn mode-btn ${currentTheme !== "light" ? "active" : ""}`}
-              onClick={() => {
-                if (currentTheme === "light") {
-                  changeTheme("navy");
-                }
-              }}
-              onMouseEnter={() => playSound("hover")}
-              title="Switch to Night Mode"
-            >
-              <Moon className="w-3.5 h-3.5 mr-1.5 inline-block align-middle" />
-              <span className="align-middle">Night</span>
-            </button>
-            <button
-              className={`theme-pill-btn mode-btn ${currentTheme === "light" ? "active" : ""}`}
-              onClick={() => changeTheme("light")}
-              onMouseEnter={() => playSound("hover")}
-              title="Switch to Light Mode"
-            >
-              <Sun className="w-3.5 h-3.5 mr-1.5 inline-block align-middle" />
-              <span className="align-middle">Light</span>
-            </button>
-          </div>
-
-          {currentTheme !== "light" && (
-            <div className="night-palettes-group animate-slideLeft">
-              <span className="palette-label">
-                Palettes:
-              </span>
-              {[
-                { id: "navy", name: "Navy", icon: Palette },
-                { id: "nebula", name: "Nebula", icon: Sparkles },
-                { id: "cyberpunk", name: "Neon", icon: Zap },
-                { id: "emerald", name: "Emerald", icon: Compass },
-                { id: "sunset", name: "Sunset", icon: Moon },
-                { id: "nordic", name: "Nordic", icon: Snowflake }
-              ].map(({ id, name, icon: IconComponent }) => (
-                <button
-                  key={id}
-                  className={`theme-pill-btn ${currentTheme === id ? "active" : ""}`}
-                  onClick={() => changeTheme(id)}
-                  onMouseEnter={() => playSound("hover")}
-                  title={`${name} palette`}
-                >
-                  <IconComponent className="w-3.5 h-3.5 mr-1.5 inline-block align-middle" />
-                  <span className="align-middle">{name}</span>
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
-
-        <div className="toolbar-controls">
-          <button
-            className={`tool-btn ${synthEnabled ? "active" : ""}`}
-            onClick={() => {
-              setSynthEnabled(!synthEnabled);
-              playSound("click");
-            }}
-            onMouseEnter={() => playSound("hover")}
-            title="Toggle Sound Effects"
-            aria-label="Toggle Sound"
-          >
-            {synthEnabled ? <Volume2 size={18} /> : <VolumeX size={18} />}
-          </button>
-
-          <button
-            className={`tool-btn fullscreen-btn ${isFullscreen ? "active" : ""}`}
-            onClick={toggleFullscreen}
-            onMouseEnter={() => playSound("hover")}
-            title="Toggle Fullscreen Mode"
-            aria-label="Toggle Fullscreen"
-          >
-            {isFullscreen ? <Minimize2 size={18} /> : <Maximize2 size={18} />}
-          </button>
-        </div>
-      </header>
 
       {/* Narrative Side Navigation Chrono Map */}
       <aside className="slide-map" aria-label="Story Chapters">
@@ -1419,7 +1324,7 @@ export default function Presentation() {
                 <h1 className="cinematic-title">Choose Your Contribution Level</h1>
                 
                 <div className="stepper-content-body mt-2">
-                  <p className="step-normal-txt font-bold text-yellow-glow" style={{ color: "var(--yellow)", fontSize: "0.85rem", marginBottom: "0.6rem" }}>
+                  <p className="step-normal-txt font-bold text-yellow-glow" style={{ color: "var(--yellow)", marginBottom: "0.6rem" }}>
                     How much do you want to contribute to the campus improvement survey?
                   </p>
 
@@ -1521,7 +1426,7 @@ export default function Presentation() {
                 <h1 className="cinematic-title">“The System Chooses the Next Question”</h1>
                 
                 <div className="stepper-content-body mt-2">
-                  <p className="step-normal-txt font-bold" style={{ color: "var(--yellow)", fontSize: "0.85rem", marginBottom: "0.6rem" }}>
+                  <p className="step-normal-txt font-bold" style={{ color: "var(--yellow)", marginBottom: "0.6rem" }}>
                     Simulate Classroom Vote Result:
                   </p>
 
@@ -1559,7 +1464,7 @@ export default function Presentation() {
                     <div className="adaptive-story-response animate-fadeIn mt-3">
                       <div className="narration-box">
                         <span className="narration-speaker">You say:</span>
-                        <blockquote className="narrator-quote" style={{ fontSize: "0.8rem" }}>
+                        <blockquote className="narrator-quote">
                           {adaptiveSelectedScenario === "close"
                             ? "“Because the result is close, the system is still uncertain. It may ask more comparisons involving these ideas.”"
                             : "“Now the system is more confident and can move to another uncertain idea.”"}
@@ -1583,7 +1488,7 @@ export default function Presentation() {
                 <h1 className="cinematic-title">{slide.title}</h1>
                 <p className="subtitle">{slide.subtitle}</p>
 
-                {slide.points?.length > 0 && (
+                {slide.points?.length > 0 && slide.scene !== "intro_splash" && slide.scene !== "problem" && (
                   <ul className="point-list">
                     {slide.points.map((point, index) => (
                       <li key={point} style={{ "--delay": `${index * 120}ms` }} className="story-point">
@@ -1716,24 +1621,37 @@ export default function Presentation() {
 
               {/* SLIDE 2 (was 1): Welcome Splash & Tone Activator */}
               {slide.scene === "intro_splash" && (
-                <div className="graphics-intro-sandbox">
-                  <p className="widget-caption">Master Presentation Interactive Portal</p>
+                <div className="split-slide-main">
+                  {slide.points?.length > 0 && (
+                    <ul className="point-list split-slide-points">
+                      {slide.points.map((point, index) => (
+                        <li key={point} style={{ "--delay": `${index * 120}ms` }} className="story-point">
+                          <span className="bullet-indicator" />
+                          <p>{point}</p>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
 
-                  <div className="welcome-splash-panel">
-                    <div className="words-matrix-glow">
-                      <span className="matrix-word float-1">Qualitative</span>
-                      <span className="matrix-word float-2">Quantitative</span>
-                      <span className="matrix-word float-3">Adaptive</span>
-                      <span className="matrix-word float-4">Wikipedia</span>
-                      <span className="matrix-word float-5">Rigor</span>
+                  <div className="graphics-intro-sandbox">
+                    <p className="widget-caption">Master Presentation Interactive Portal</p>
+
+                    <div className="welcome-splash-panel">
+                      <div className="words-matrix-glow">
+                        <span className="matrix-word float-1">Qualitative</span>
+                        <span className="matrix-word float-2">Quantitative</span>
+                        <span className="matrix-word float-3">Adaptive</span>
+                        <span className="matrix-word float-4">Wikipedia</span>
+                        <span className="matrix-word float-5">Rigor</span>
+                      </div>
+
+                      <button
+                        className={`activate-tone-btn ${toneActivated ? "active" : ""}`}
+                        onClick={handleActivateTone}
+                      >
+                        {toneActivated ? " Synthesizer Activated" : " Activate Tone Synthesizer"}
+                      </button>
                     </div>
-
-                    <button
-                      className={`activate-tone-btn ${toneActivated ? "active" : ""}`}
-                      onClick={handleActivateTone}
-                    >
-                      {toneActivated ? " Synthesizer Activated" : " Activate Tone Synthesizer"}
-                    </button>
                   </div>
                 </div>
               )}
@@ -1936,61 +1854,74 @@ export default function Presentation() {
                 </div>
               )}
 
-              {/* SLIDE 2: Rigidity vs Chaos Balance Scale */}
+              {/* Core Dilemma: Rigidity vs Chaos Balance Scale */}
               {slide.scene === "problem" && (
-                <div className="graphics-problem-sandbox">
-                  <p className="widget-caption">Balance Rigidity (Surveys) vs. Chaos (Interviews)</p>
+                <div className="split-slide-main">
+                  {slide.points?.length > 0 && (
+                    <ul className="point-list split-slide-points">
+                      {slide.points.map((point, index) => (
+                        <li key={point} style={{ "--delay": `${index * 120}ms` }} className="story-point">
+                          <span className="bullet-indicator" />
+                          <p>{point}</p>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
 
-                  <div className="scale-simulation-arena">
-                    <svg className="balance-scale-svg" viewBox="0 0 300 200">
-                      <path d="M140 180 L160 180 L154 70 L146 70 Z" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.3)" strokeWidth="2" />
-                      <rect x="110" y="180" width="80" height="8" rx="4" fill="rgba(255,255,255,0.25)" />
-                      <circle cx="150" cy="70" r="6" fill="var(--yellow)" />
+                  <div className="graphics-problem-sandbox">
+                    <p className="widget-caption">Balance Rigidity (Surveys) vs. Chaos (Interviews)</p>
 
-                      <g style={{ transform: `rotate(${(rigidityVal - 50) * 0.4}deg)`, transformOrigin: "150px 70px", transition: "transform 0.15s ease" }}>
-                        <line x1="50" y1="70" x2="250" y2="70" stroke="var(--yellow)" strokeWidth="6" strokeLinecap="round" />
-                        <line x1="50" y1="70" x2="250" y2="70" stroke="#ffffff" strokeWidth="2" strokeOpacity="0.4" />
+                    <div className="scale-simulation-arena">
+                      <svg className="balance-scale-svg" viewBox="0 0 300 200">
+                        <path d="M140 180 L160 180 L154 70 L146 70 Z" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.3)" strokeWidth="2" />
+                        <rect x="110" y="180" width="80" height="8" rx="4" fill="rgba(255,255,255,0.25)" />
+                        <circle cx="150" cy="70" r="6" fill="var(--yellow)" />
 
-                        <line x1="50" y1="70" x2="20" y2="130" stroke="rgba(255,255,255,0.3)" strokeWidth="1.5" />
-                        <line x1="50" y1="70" x2="80" y2="130" stroke="rgba(255,255,255,0.3)" strokeWidth="1.5" />
+                        <g style={{ transform: `rotate(${(rigidityVal - 50) * 0.4}deg)`, transformOrigin: "150px 70px", transition: "transform 0.15s ease" }}>
+                          <line x1="50" y1="70" x2="250" y2="70" stroke="var(--yellow)" strokeWidth="6" strokeLinecap="round" />
+                          <line x1="50" y1="70" x2="250" y2="70" stroke="#ffffff" strokeWidth="2" strokeOpacity="0.4" />
 
-                        <line x1="250" y1="70" x2="220" y2="130" stroke="rgba(255,255,255,0.3)" strokeWidth="1.5" />
-                        <line x1="250" y1="70" x2="280" y2="130" stroke="rgba(255,255,255,0.3)" strokeWidth="1.5" />
+                          <line x1="50" y1="70" x2="20" y2="130" stroke="rgba(255,255,255,0.3)" strokeWidth="1.5" />
+                          <line x1="50" y1="70" x2="80" y2="130" stroke="rgba(255,255,255,0.3)" strokeWidth="1.5" />
 
-                        <path d="M15 130 Q50 165 85 130 Z" fill="var(--pink-glow)" stroke="var(--pink)" strokeWidth="2" />
-                        <path d="M215 130 Q250 165 285 130 Z" fill="var(--blue-glow)" stroke="var(--blue)" strokeWidth="2" />
+                          <line x1="250" y1="70" x2="220" y2="130" stroke="rgba(255,255,255,0.3)" strokeWidth="1.5" />
+                          <line x1="250" y1="70" x2="280" y2="130" stroke="rgba(255,255,255,0.3)" strokeWidth="1.5" />
 
-                        <rect x="42" y="115" width="16" height="16" rx="3" fill="var(--pink)" style={{ opacity: Math.max(0.2, rigidityVal / 100) }} />
-                        <rect x="242" y="115" width="16" height="16" rx="3" fill="var(--blue)" style={{ opacity: Math.max(0.2, (100 - rigidityVal) / 100) }} />
-                      </g>
-                    </svg>
-                  </div>
+                          <path d="M15 130 Q50 165 85 130 Z" fill="var(--pink-glow)" stroke="var(--pink)" strokeWidth="2" />
+                          <path d="M215 130 Q250 165 285 130 Z" fill="var(--blue-glow)" stroke="var(--blue)" strokeWidth="2" />
 
-                  <div className="balance-controls">
-                    <div className="meter-label-row">
-                      <span className="meter-label pink-txt">Qualitative Depth: <strong>{rigidityVal}%</strong></span>
-                      <span className="meter-label blue-txt">Quantitative Scale: <strong>{100 - rigidityVal}%</strong></span>
+                          <rect x="42" y="115" width="16" height="16" rx="3" fill="var(--pink)" style={{ opacity: Math.max(0.2, rigidityVal / 100) }} />
+                          <rect x="242" y="115" width="16" height="16" rx="3" fill="var(--blue)" style={{ opacity: Math.max(0.2, (100 - rigidityVal) / 100) }} />
+                        </g>
+                      </svg>
                     </div>
 
-                    <input
-                      type="range"
-                      min="5"
-                      max="95"
-                      value={rigidityVal}
-                      onChange={(e) => setRigidityVal(Number(e.target.value))}
-                      className="slider-instrument-control"
-                      aria-label="Tension scale slider"
-                    />
+                    <div className="balance-controls">
+                      <div className="meter-label-row">
+                        <span className="meter-label pink-txt">Qualitative Depth: <strong>{rigidityVal}%</strong></span>
+                        <span className="meter-label blue-txt">Quantitative Scale: <strong>{100 - rigidityVal}%</strong></span>
+                      </div>
 
-                    {isInSweetZone ? (
-                      <div className="sweet-spot-badge-neon">
-                         WIKI SURVEY SWEET SPOT FOUND!
-                      </div>
-                    ) : (
-                      <div className="balancing-status-hint">
-                        {rigidityVal < 42 ? " Too rigid: Missing qualitative exploration" : " Too chaotic: Hard to scale and analyze quantitative values"}
-                      </div>
-                    )}
+                      <input
+                        type="range"
+                        min="5"
+                        max="95"
+                        value={rigidityVal}
+                        onChange={(e) => setRigidityVal(Number(e.target.value))}
+                        className="slider-instrument-control"
+                        aria-label="Tension scale slider"
+                      />
+
+                      {isInSweetZone ? (
+                        <div className="sweet-spot-badge-neon">
+                           WIKI SURVEY SWEET SPOT FOUND!
+                        </div>
+                      ) : (
+                        <div className="balancing-status-hint">
+                          {rigidityVal < 42 ? " Too rigid: Missing qualitative exploration" : " Too chaotic: Hard to scale and analyze quantitative values"}
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
               )}
@@ -3113,10 +3044,39 @@ export default function Presentation() {
             ← Previous
           </button>
 
-          <div className="slide-counter">
-            <span className="active-num">{current + 1}</span>
-            <span className="divider">/</span>
-            <span className="total-num">{slides.length}</span>
+          <div className="controls-center">
+            <div className="slide-counter">
+              <span className="active-num">{current + 1}</span>
+              <span className="divider">/</span>
+              <span className="total-num">{slides.length}</span>
+            </div>
+
+            <div className="deck-utilities">
+              <button
+                type="button"
+                className={`tool-btn ${synthEnabled ? "active" : ""}`}
+                onClick={() => {
+                  setSynthEnabled(!synthEnabled);
+                  playSound("click");
+                }}
+                onMouseEnter={() => playSound("hover")}
+                title="Toggle Sound Effects"
+                aria-label="Toggle Sound"
+              >
+                {synthEnabled ? <Volume2 size={18} /> : <VolumeX size={18} />}
+              </button>
+
+              <button
+                type="button"
+                className={`tool-btn fullscreen-btn ${isFullscreen ? "active" : ""}`}
+                onClick={toggleFullscreen}
+                onMouseEnter={() => playSound("hover")}
+                title="Toggle Fullscreen Mode"
+                aria-label="Toggle Fullscreen"
+              >
+                {isFullscreen ? <Minimize2 size={18} /> : <Maximize2 size={18} />}
+              </button>
+            </div>
           </div>
 
           <button
